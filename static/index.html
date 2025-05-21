@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Распознавание автомобильных номеров</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .tabs {
+            margin-bottom: 20px;
+        }
+        .tab-btn {
+            padding: 10px;
+            margin-right: 5px;
+            cursor: pointer;
+        }
+        .active-btn {
+            font-weight: bold;
+            background: #ddd;
+        }
+        .tab-content {
+            display: none;
+            padding: 10px;
+            border: 1px solid #ddd;
+        }
+        .active-tab {
+            display: block;
+        }
+        .spinner {
+            display: none;
+            border: 5px solid #f3f3f3;
+            border-top: 5px solid #3498db;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            animation: spin 2s linear infinite;
+            margin: 10px 0;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .result-box {
+            margin-top: 10px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            display: none;
+        }
+        img {
+            max-width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <h1>Распознавание автомобильных номеров</h1>
+    
+    <div class="tabs">
+        <button class="tab-btn active-btn" onclick="showTab('video-tab')">Видео</button>
+        <button class="tab-btn" onclick="showTab('photo-tab')">Фото</button>
+        <button class="tab-btn" onclick="showTab('results-tab')">Результаты</button>
+        <button class="tab-btn" onclick="showTab('stats-tab')">Статистика</button>
+    </div>
+
+    <div id="video-tab" class="tab-content active-tab">
+        <h2>Обработка видео</h2>
+        <input type="file" id="video-file" accept=".mp4">
+        <button onclick="sendVideo()">Обработать</button>
+        <div class="spinner" id="video-spinner"></div>
+        <div class="result-box" id="video-result"></div>
+    </div>
+
+    <div id="photo-tab" class="tab-content">
+        <h2>Обработка фото</h2>
+        <input type="file" id="photo-file" accept=".jpg,.jpeg,.png">
+        <button onclick="sendPhoto()">Обработать</button>
+        <div class="spinner" id="photo-spinner"></div>
+        <div class="result-box" id="photo-result"></div>
+    </div>
+
+    <div id="results-tab" class="tab-content">
+        <h2>Результаты сессии</h2>
+        <input type="number" id="session-id" placeholder="ID сессии" min="1">
+        <button onclick="loadResults()">Получить</button>
+        <div class="result-box" id="session-result"></div>
+    </div>
+
+    <div id="stats-tab" class="tab-content">
+        <h2>Статистика</h2>
+        <button onclick="loadStats()">Обновить</button>
+        <div class="spinner" id="stats-spinner"></div>
+        <div class="result-box" id="stats-result"></div>
+    </div>
+
+    <script>
+        // переключение вкладок
+        function showTab(tabId) {
+            // скрываем все вкладки
+            var tabs = document.getElementsByClassName('tab-content');
+            for (var i = 0; i < tabs.length; i++) {
+                tabs[i].classList.remove('active-tab');
+            }
+            
+            // убираем активный класс у кнопок
+            var buttons = document.getElementsByClassName('tab-btn');
+            for (var i = 0; i < buttons.length; i++) {
+                buttons[i].classList.remove('active-btn');
+            }
+            
+            // показываем выбранную вкладку
+            document.getElementById(tabId).classList.add('active-tab');
+            
+            // добавляем активный класс кнопке
+            for (var i = 0; i < buttons.length; i++) {
+                if (buttons[i].getAttribute('onclick').indexOf(tabId) > -1) {
+                    buttons[i].classList.add('active-btn');
+                }
+            }
+        }
+
+        // отправка видео
+        function sendVideo() {
+            var file = document.getElementById('video-file').files[0];
+            
+            if (!file) {
+                alert('Выберите видео файл');
+                return;
+            }
+            
+            // показываем индикатор загрузки
+            document.getElementById('video-spinner').style.display = 'block';
+            document.getElementById('video-result').style.display = 'none';
+            
+            // создаем форму
+            var form = new FormData();
+            form.append('file', file);
+            
+            // отправляем запрос
+            fetch('/api/video', {
+                method: 'POST',
+                body: form
+            })
+            .then(function(response) {
+                return response.json();
+            })
+            .then(function(data) {
+                if (data.session_id) {
+                    showVideoResult('Обработка начата. ID сессии: ' + data.session_id);
+                    checkStatus(data.session_id);
+                } else {
+                    showVideoResult('Ошибка: ' + (data.error || 'Неизвестная ошибка'));
+                }
+            })
+            .catch(function(error) {
+                showVideoResult('Ошибка: ' + error.message);
+            });
+        }
+        
+        // проверка статуса обработки
+        function checkStatus(sessionId) {
+            fetch('/api/status/' + sessionId)
+            .then(function(response) {
+                return response.json();
+            })
+            .then(function(data) {
+                if (data.status === 'completed') {
+                    getVideResult(sessionId);
+                } else if (data.status === 'failed') {
+                    showVideoResult('Обработка не удалась');
+                } else {
+                    document.getElementById('video-result').innerHTML = 'Обработка видео... Статус: ' + data.status;
+                    document.getElementById('video-result').style.display = 'block';
+                    setTimeout(function() {
+                        checkStatus(sessionId);
+                    }, 2000);
+                }
+            })
+            .catch(function(error) {
+                showVideoResult('Ошибка: ' + error.message);
+            });
+        }
+        
+        // получение результатов видео
+        function getVideResult(sessionId) {
+            fetch('/api/results/' + sessionId)
+            .then(function(response) {
+                return response.json();
+            })
+            .then(function(data) {
+                var html = '<h3>Результаты сессии ' + sessionId + '</h3>';
+                
+                if (data.session && data.session.output_file) {
+                    html += '<p>Выходной файл: ' + data.session.output_file + '</p>';
+                    html += '<p><a href="/api/download/' + encodeURIComponent(data.session.output_file) + '" download>Скачать результат</a></p>';
+                }
+                
+                if (data.plates && data.plates.length > 0) {
+                    html += '<h4>Обнаруженные номера:</h4><ul>';
+                    for (var i = 0; i < data.plates.length; i++) {
+                        var plate = data.plates[i];
+                        html += '<li>' + plate.text + ' (уверенность: ' + plate.conf.toFixed(2) + ')</li>';
+                    }
+                    html += '</ul>';
+                } else {
+                    html += '<p>Номера не обнаружены</p>';
+                }
+                
+                showVideoResult(html);
+            })
+            .catch(function(error) {
+                showVideoResult('Ошибка: ' + error.message);
+            });
+        }
+
+        // отображение результата видео
+        function showVideoResult(html) {
+            document.getElementById('video-spinner').style.display = 'none';
+            document.getElementById('video-result').innerHTML = html;
+            document.getElementById('video-result').style.display = 'block';
+        }
+
+        // отправка фото
+        function sendPhoto() {
+            var file = document.getElementById('photo-file').files[0];
+            
+            if (!file) {
+                alert('Выберите фото');
+                return;
+            }
+            
+            // показываем индикатор загрузки
+            document.getElementById('photo-spinner').style.display = 'block';
+            document.getElementById('photo-result').style.display = 'none';
+            
+            // создаем форму
+            var form = new FormData();
+            form.append('file', file);
+            
+            // отправляем запрос
+            fetch('/api/photo', {
+                method: 'POST',
+                body: form
+            })
+            .then(function(response) {
+                return response.json();
+            })
+            .then(function(data) {
+                var html = '<h3>Результаты обработки фото</h3>';
+                
+                if (data.error) {
+                    html += '<p>Ошибка: ' + data.error + '</p>';
+                } else {
+                    // отображаем найденные номера
+                    if (data.plates && data.plates.length > 0) {
+                        html += '<h4>Обнаруженные номера:</h4><ul>';
+                        for (var i = 0; i < data.plates.length; i++) {
+                            var plate = data.plates[i];
+                            html += '<li>' + plate.text + ' (уверенность: ' + plate.conf.toFixed(2) + ', метод: ' + plate.method + ')</li>';
+                        }
+                        html += '</ul>';
+                    } else {
+                        html += '<p>Номера не обнаружены</p>';
+                    }
+                    
+                    // показываем обработанное изображение
+                    if (data.image) {
+                        html += '<h4>Результат:</h4>';
+                        html += '<img src="' + data.image + '" alt="Обработанное изображение">';
+                    }
+                }
+                
+                document.getElementById('photo-spinner').style.display = 'none';
+                document.getElementById('photo-result').innerHTML = html;
+                document.getElementById('photo-result').style.display = 'block';
+            })
+            .catch(function(error) {
+                document.getElementById('photo-spinner').style.display = 'none';
+                document.getElementById('photo-result').innerHTML = 'Ошибка: ' + error.message;
+                document.getElementById('photo-result').style.display = 'block';
+            });
+        }
+
+        // получение результатов по ID
+        function loadResults() {
+            var sessionId = document.getElementById('session-id').value;
+            
+            if (!sessionId) {
+                alert('Введите ID сессии');
+                return;
+            }
+            
+            fetch('/api/results/' + sessionId)
+            .then(function(response) {
+                return response.json();
+            })
+            .then(function(data) {
+                var html = '<h3>Результаты сессии ' + sessionId + '</h3>';
+                
+                if (data.error) {
+                    html += '<p>Ошибка: ' + data.error + '</p>';
+                } else {
+                    html += '<p>Статус: ' + data.session.status + '</p>';
+                    
+                    if (data.session.output_file) {
+                        html += '<p>Выходной файл: ' + data.session.output_file + '</p>';
+                        html += '<p><a href="/api/download/' + encodeURIComponent(data.session.output_file) + '" download>Скачать результат</a></p>';
+                    }
+                    
+                    if (data.plates && data.plates.length > 0) {
+                        html += '<h4>Обнаруженные номера:</h4><ul>';
+                        for (var i = 0; i < data.plates.length; i++) {
+                            var plate = data.plates[i];
+                            html += '<li>' + plate.text + ' (уверенность: ' + plate.conf.toFixed(2) + ')</li>';
+                        }
+                        html += '</ul>';
+                    } else {
+                        html += '<p>Номера не обнаружены</p>';
+                    }
+                }
+                
+                document.getElementById('session-result').innerHTML = html;
+                document.getElementById('session-result').style.display = 'block';
+            })
+            .catch(function(error) {
+                document.getElementById('session-result').innerHTML = 'Ошибка: ' + error.message;
+                document.getElementById('session-result').style.display = 'block';
+            });
+        }
+
+        // загрузка статистики
+        function loadStats() {
+            document.getElementById('stats-spinner').style.display = 'block';
+            document.getElementById('stats-result').style.display = 'none';
+            
+            fetch('/api/stats')
+            .then(function(response) {
+                return response.json();
+            })
+            .then(function(data) {
+                var html = '<h3>Статистика системы</h3>';
+                html += '<p>Всего сессий: ' + data.sessions.total + '</p>';
+                html += '<p>Успешных: ' + data.sessions.completed + '</p>';
+                html += '<p>С ошибками: ' + data.sessions.failed + '</p>';
+                html += '<p>Всего распознано номеров: ' + data.total_plates + '</p>';
+                
+                document.getElementById('stats-spinner').style.display = 'none';
+                document.getElementById('stats-result').innerHTML = html;
+                document.getElementById('stats-result').style.display = 'block';
+            })
+            .catch(function(error) {
+                document.getElementById('stats-spinner').style.display = 'none';
+                document.getElementById('stats-result').innerHTML = 'Ошибка: ' + error.message;
+                document.getElementById('stats-result').style.display = 'block';
+            });
+        }
+    </script>
+</body>
+</html> 

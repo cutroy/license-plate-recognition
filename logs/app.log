@@ -1,0 +1,92 @@
+2025-05-21 14:01:40 | INFO     | api:<module>:18 - Загрузка моделей...
+2025-05-21 14:01:40 | INFO     | api:<module>:23 - Модель номеров загружена
+2025-05-21 14:01:49 | INFO     | api:process_video_task:83 - Начинаем обработку видео: uploads/testik_vidos.mp4
+2025-05-21 14:01:52 | INFO     | api:process_video_task:260 - Обработано 10 кадров
+2025-05-21 14:01:55 | INFO     | api:process_video_task:260 - Обработано 20 кадров
+2025-05-21 14:01:57 | INFO     | api:process_video_task:260 - Обработано 30 кадров
+2025-05-21 14:02:00 | INFO     | api:process_video_task:260 - Обработано 40 кадров
+2025-05-21 14:02:02 | INFO     | api:process_video_task:260 - Обработано 50 кадров
+2025-05-21 14:02:05 | INFO     | api:process_video_task:260 - Обработано 60 кадров
+2025-05-21 14:02:08 | INFO     | api:process_video_task:260 - Обработано 70 кадров
+2025-05-21 14:02:12 | INFO     | api:process_video_task:260 - Обработано 80 кадров
+2025-05-21 14:02:15 | INFO     | api:process_video_task:260 - Обработано 90 кадров
+2025-05-21 14:02:19 | INFO     | api:process_video_task:260 - Обработано 100 кадров
+2025-05-21 14:02:22 | INFO     | api:process_video_task:260 - Обработано 110 кадров
+2025-05-21 14:02:26 | INFO     | api:process_video_task:260 - Обработано 120 кадров
+2025-05-21 14:02:30 | INFO     | api:process_video_task:260 - Обработано 130 кадров
+2025-05-21 14:02:34 | INFO     | api:process_video_task:260 - Обработано 140 кадров
+2025-05-21 14:02:38 | INFO     | api:process_video_task:260 - Обработано 150 кадров
+2025-05-21 14:02:39 | INFO     | api:process_video_task:274 - Обработка видео завершена. Результат сохранен в results/detected_testik_vidos.mp4
+2025-05-21 14:03:24 | INFO     | api:process_photo:329 - Используется модель поиска номеров
+2025-05-21 15:31:07 | INFO     | api:<module>:18 - Загрузка моделей...
+2025-05-21 15:31:07 | INFO     | api:<module>:23 - Модель номеров загружена
+2025-05-21 15:31:40 | INFO     | api:process_video_task:85 - Начинаем обработку видео: uploads/testovoe_video.mp4
+2025-05-21 15:31:44 | INFO     | api:process_video_task:262 - Обработано 10 кадров
+2025-05-21 15:31:46 | INFO     | api:process_video_task:262 - Обработано 20 кадров
+2025-05-21 15:31:49 | INFO     | api:process_video_task:262 - Обработано 30 кадров
+2025-05-21 15:31:51 | INFO     | api:process_video_task:262 - Обработано 40 кадров
+2025-05-21 15:31:53 | INFO     | api:process_video_task:262 - Обработано 50 кадров
+2025-05-21 15:31:56 | INFO     | api:process_video_task:262 - Обработано 60 кадров
+2025-05-21 15:31:58 | INFO     | api:process_video_task:262 - Обработано 70 кадров
+2025-05-21 15:31:59 | INFO     | api:process_video_task:262 - Обработано 80 кадров
+2025-05-21 15:32:01 | INFO     | api:process_video_task:262 - Обработано 90 кадров
+2025-05-21 15:32:03 | INFO     | api:process_video_task:262 - Обработано 100 кадров
+2025-05-21 15:32:05 | INFO     | api:process_video_task:262 - Обработано 110 кадров
+2025-05-21 15:32:07 | INFO     | api:process_video_task:262 - Обработано 120 кадров
+2025-05-21 15:32:09 | INFO     | api:process_video_task:262 - Обработано 130 кадров
+2025-05-21 15:32:12 | INFO     | api:process_video_task:262 - Обработано 140 кадров
+2025-05-21 15:32:14 | INFO     | api:process_video_task:262 - Обработано 150 кадров
+2025-05-21 15:32:16 | INFO     | api:process_video_task:262 - Обработано 160 кадров
+2025-05-21 15:32:18 | INFO     | api:process_video_task:262 - Обработано 170 кадров
+2025-05-21 15:32:19 | INFO     | api:process_video_task:262 - Обработано 180 кадров
+2025-05-21 15:32:22 | INFO     | api:process_video_task:262 - Обработано 190 кадров
+2025-05-21 15:32:24 | INFO     | api:process_video_task:262 - Обработано 200 кадров
+2025-05-21 15:32:26 | INFO     | api:process_video_task:262 - Обработано 210 кадров
+2025-05-21 15:32:29 | INFO     | api:process_video_task:262 - Обработано 220 кадров
+2025-05-21 15:32:31 | INFO     | api:process_video_task:262 - Обработано 230 кадров
+2025-05-21 15:32:33 | INFO     | api:process_video_task:262 - Обработано 240 кадров
+2025-05-21 15:32:36 | INFO     | api:process_video_task:262 - Обработано 250 кадров
+2025-05-21 15:32:38 | INFO     | api:process_video_task:262 - Обработано 260 кадров
+2025-05-21 15:32:41 | INFO     | api:process_video_task:262 - Обработано 270 кадров
+2025-05-21 15:32:44 | INFO     | api:process_video_task:262 - Обработано 280 кадров
+2025-05-21 15:32:46 | INFO     | api:process_video_task:262 - Обработано 290 кадров
+2025-05-21 15:32:50 | INFO     | api:process_video_task:262 - Обработано 300 кадров
+2025-05-21 15:32:53 | INFO     | api:process_video_task:262 - Обработано 310 кадров
+2025-05-21 15:32:56 | INFO     | api:process_video_task:262 - Обработано 320 кадров
+2025-05-21 15:33:00 | INFO     | api:process_video_task:262 - Обработано 330 кадров
+2025-05-21 15:33:04 | INFO     | api:process_video_task:262 - Обработано 340 кадров
+2025-05-21 15:33:07 | INFO     | api:process_video_task:262 - Обработано 350 кадров
+2025-05-21 15:33:09 | INFO     | api:process_video_task:262 - Обработано 360 кадров
+2025-05-21 15:33:11 | INFO     | api:process_video_task:262 - Обработано 370 кадров
+2025-05-21 15:33:14 | INFO     | api:process_video_task:262 - Обработано 380 кадров
+2025-05-21 15:33:15 | INFO     | api:process_video_task:262 - Обработано 390 кадров
+2025-05-21 15:33:17 | INFO     | api:process_video_task:262 - Обработано 400 кадров
+2025-05-21 15:33:18 | INFO     | api:process_video_task:262 - Обработано 410 кадров
+2025-05-21 15:33:20 | INFO     | api:process_video_task:262 - Обработано 420 кадров
+2025-05-21 15:33:21 | INFO     | api:process_video_task:262 - Обработано 430 кадров
+2025-05-21 15:33:24 | INFO     | api:process_video_task:262 - Обработано 440 кадров
+2025-05-21 15:33:26 | INFO     | api:process_video_task:262 - Обработано 450 кадров
+2025-05-21 15:33:27 | INFO     | api:process_video_task:262 - Обработано 460 кадров
+2025-05-21 15:33:29 | INFO     | api:process_video_task:262 - Обработано 470 кадров
+2025-05-21 15:33:31 | INFO     | api:process_video_task:262 - Обработано 480 кадров
+2025-05-21 15:33:33 | INFO     | api:process_video_task:262 - Обработано 490 кадров
+2025-05-21 15:33:35 | INFO     | api:process_video_task:262 - Обработано 500 кадров
+2025-05-21 15:33:38 | INFO     | api:process_video_task:262 - Обработано 510 кадров
+2025-05-21 15:33:40 | INFO     | api:process_video_task:262 - Обработано 520 кадров
+2025-05-21 15:33:43 | INFO     | api:process_video_task:262 - Обработано 530 кадров
+2025-05-21 15:33:46 | INFO     | api:process_video_task:262 - Обработано 540 кадров
+2025-05-21 15:33:48 | INFO     | api:process_video_task:262 - Обработано 550 кадров
+2025-05-21 15:33:51 | INFO     | api:process_video_task:262 - Обработано 560 кадров
+2025-05-21 15:33:53 | INFO     | api:process_video_task:262 - Обработано 570 кадров
+2025-05-21 15:33:56 | INFO     | api:process_video_task:262 - Обработано 580 кадров
+2025-05-21 15:33:58 | INFO     | api:process_video_task:262 - Обработано 590 кадров
+2025-05-21 15:34:01 | INFO     | api:process_video_task:262 - Обработано 600 кадров
+2025-05-21 15:34:03 | INFO     | api:process_video_task:262 - Обработано 610 кадров
+2025-05-21 15:34:05 | INFO     | api:process_video_task:262 - Обработано 620 кадров
+2025-05-21 15:34:07 | INFO     | api:process_video_task:262 - Обработано 630 кадров
+2025-05-21 15:34:10 | INFO     | api:process_video_task:262 - Обработано 640 кадров
+2025-05-21 15:34:12 | INFO     | api:process_video_task:262 - Обработано 650 кадров
+2025-05-21 15:34:14 | INFO     | api:process_video_task:262 - Обработано 660 кадров
+2025-05-21 15:34:16 | INFO     | api:process_video_task:262 - Обработано 670 кадров
+2025-05-21 15:34:17 | INFO     | api:process_video_task:276 - Обработка видео завершена. Результат сохранен в results/detected_testovoe_video.mp4
+2025-05-21 15:34:46 | INFO     | api:process_photo:332 - Используется модель поиска номеров
